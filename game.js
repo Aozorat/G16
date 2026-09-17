@@ -1,11 +1,11 @@
-// Weapons Database (6 Weapons)
+// GBA 16-bit Weapons Config
 const WEAPONS = {
-    DAGGER: { name: 'Dagger', color: '#e74c3c', speed: 12, damage: 20, size: 4, cooldown: 180 },
-    GUN: { name: 'Handgun', color: '#f1c40f', speed: 16, damage: 35, size: 5, cooldown: 300 },
-    SPEAR: { name: 'Spear', color: '#3498db', speed: 10, damage: 65, size: 7, cooldown: 550 },
-    BOW: { name: 'Longbow', color: '#2ecc71', speed: 14, damage: 45, size: 4, cooldown: 400 },
-    AXE: { name: 'Battle Axe', color: '#e67e22', speed: 8, damage: 85, size: 9, cooldown: 700 },
-    BONE: { name: 'Bone Wand', color: '#ecf0f1', speed: 11, damage: 50, size: 6, cooldown: 350 }
+    DAGGER: { name: 'DAGGER', color: '#e74c3c', speed: 6, damage: 20, size: 3, cooldown: 180 },
+    GUN: { name: 'HANDGUN', color: '#f1c40f', speed: 8, damage: 35, size: 3, cooldown: 300 },
+    SPEAR: { name: 'SPEAR', color: '#3498db', speed: 5, damage: 65, size: 5, cooldown: 550 },
+    BOW: { name: 'BOW', color: '#2ecc71', speed: 7, damage: 45, size: 3, cooldown: 400 },
+    AXE: { name: 'AXE', color: '#e67e22', speed: 4, damage: 85, size: 6, cooldown: 700 },
+    BONE: { name: 'BONE', color: '#ecf0f1', speed: 5.5, damage: 50, size: 4, cooldown: 350 }
 };
 
 let canvas, ctx;
@@ -25,16 +25,17 @@ function selectCharacter(gender) {
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
 
-    let speed = 3.5, icon = '👨', name = 'Male Warrior';
-    if (gender === 'female') { speed = 4.8; icon = '👩'; name = 'Female Huntress'; }
-    else if (gender === 'old') { speed = 2.8; icon = '👨‍🦳'; name = 'Elder Mage'; }
+    let speed = 2.0, color = '#1565c0', name = 'BOY';
+    if (gender === 'female') { speed = 2.6; color = '#ad1457'; name = 'GIRL'; }
+    else if (gender === 'old') { speed = 1.6; color = '#424242'; name = 'ELDER'; }
 
     player = {
         x: canvas.width / 2,
         y: canvas.height / 2,
-        radius: 16,
+        width: 16,
+        height: 16,
         speed: speed,
-        icon: icon,
+        color: color,
         name: name,
         hp: 100,
         maxHp: 100,
@@ -50,7 +51,7 @@ function selectCharacter(gender) {
     initEventListeners();
     setupTouchControls();
 
-    setInterval(spawnMonster, 1200);
+    setInterval(spawnMonster, 1400);
     requestAnimationFrame(gameLoop);
 }
 
@@ -89,8 +90,8 @@ function setupTouchControls() {
     });
 
     const resetJoystick = () => {
-        knob.style.top = '30px';
-        knob.style.left = '30px';
+        knob.style.top = '23px';
+        knob.style.left = '23px';
         joystickVector = { x: 0, y: 0 };
     };
 
@@ -105,21 +106,20 @@ function setupTouchControls() {
         let dx = touch.clientX - centerX;
         let dy = touch.clientY - centerY;
         const dist = Math.hypot(dx, dy);
-        const maxDist = 35;
+        const maxDist = 28;
 
         if (dist > maxDist) {
             dx = (dx / dist) * maxDist;
             dy = (dy / dist) * maxDist;
         }
 
-        knob.style.left = `${30 + dx}px`;
-        knob.style.top = `${30 + dy}px`;
+        knob.style.left = `${23 + dx}px`;
+        knob.style.top = `${23 + dy}px`;
         joystickVector = { x: dx / maxDist, y: dy / maxDist };
     }
 
     attackBtn.addEventListener('touchstart', e => {
         e.preventDefault();
-        // Auto-target nearest monster on touch attack
         if (monsters.length > 0) {
             let nearest = monsters[0];
             let minDist = Math.hypot(monsters[0].x - player.x, monsters[0].y - player.y);
@@ -141,7 +141,6 @@ function updateUI() {
     document.getElementById('ui-exp').innerText = player.exp;
     document.getElementById('ui-max-exp').innerText = player.maxExp;
     document.getElementById('ui-weapon').innerText = player.weapon.name;
-    document.getElementById('ui-skill-pts').innerText = player.skillPoints;
 
     const skillMenu = document.getElementById('skill-menu');
     if (player.skillPoints > 0) skillMenu.classList.remove('hidden');
@@ -151,7 +150,7 @@ function updateUI() {
 function upgradeSkill(type) {
     if (player.skillPoints <= 0) return;
     if (type === 'dmg') player.bonusDamage += 10;
-    if (type === 'spd') player.speed += 0.5;
+    if (type === 'spd') player.speed += 0.4;
     if (type === 'hp') { player.maxHp += 25; player.hp += 25; }
     player.skillPoints--;
     updateUI();
@@ -175,27 +174,25 @@ function shoot() {
 }
 
 function spawnMonster() {
-    if (monsters.length >= 12) return;
+    if (monsters.length >= 10) return;
 
-    let x = Math.random() < 0.5 ? -20 : canvas.width + 20;
+    let x = Math.random() < 0.5 ? -16 : canvas.width + 16;
     let y = Math.random() * canvas.height;
 
     monsters.push({
         x: x,
         y: y,
-        hp: 40 + (player.level * 12),
-        maxHp: 40 + (player.level * 12),
-        speed: 1.2 + Math.random() * 1.0,
-        damage: 8 + (player.level * 2),
-        radius: 14,
-        color: '#8e44ad'
+        hp: 35 + (player.level * 10),
+        maxHp: 35 + (player.level * 10),
+        speed: 0.8 + Math.random() * 0.6,
+        size: 16,
+        color: '#7b1fa2'
     });
 }
 
 function dropRandomWeapon() {
     const keys = Object.keys(WEAPONS);
-    const newWeapon = WEAPONS[keys[Math.floor(Math.random() * keys.length)]];
-    player.weapon = newWeapon;
+    player.weapon = WEAPONS[keys[Math.floor(Math.random() * keys.length)]];
     updateUI();
 }
 
@@ -211,7 +208,6 @@ function addExp(amount) {
 }
 
 function update() {
-    // Movement (Keyboard or Joystick)
     let moveX = 0, moveY = 0;
     if (keys['w'] || keys['arrowup']) moveY -= 1;
     if (keys['s'] || keys['arrowdown']) moveY += 1;
@@ -226,11 +222,10 @@ function update() {
     player.x += moveX * player.speed;
     player.y += moveY * player.speed;
 
-    // Keep inside bounds
-    player.x = Math.max(player.radius, Math.min(canvas.width - player.radius, player.x));
-    player.y = Math.max(player.radius, Math.min(canvas.height - player.radius, player.y));
+    player.x = Math.max(8, Math.min(canvas.width - 8, player.x));
+    player.y = Math.max(8, Math.min(canvas.height - 8, player.y));
 
-    // Update Bullets
+    // Bullets Update
     for (let i = bullets.length - 1; i >= 0; i--) {
         let b = bullets[i];
         b.x += b.dx;
@@ -240,28 +235,24 @@ function update() {
         }
     }
 
-    // Update Monsters & Combat
+    // Monsters Update
     for (let mIndex = monsters.length - 1; mIndex >= 0; mIndex--) {
         let m = monsters[mIndex];
         const angle = Math.atan2(player.y - m.y, player.x - m.x);
         m.x += Math.cos(angle) * m.speed;
         m.y += Math.sin(angle) * m.speed;
 
-        // Monster Hits Player
-        const distToPlayer = Math.hypot(player.x - m.x, player.y - m.y);
-        if (distToPlayer < player.radius + m.radius) {
-            player.hp -= 0.3; // Continuous damage on touch
+        // Player Collision
+        if (Math.hypot(player.x - m.x, player.y - m.y) < 12) {
+            player.hp -= 0.25;
             updateUI();
-            if (player.hp <= 0) {
-                gameOver();
-                return;
-            }
+            if (player.hp <= 0) { gameOver(); return; }
         }
 
-        // Bullets Hit Monsters
+        // Bullet Collision
         for (let bIndex = bullets.length - 1; bIndex >= 0; bIndex--) {
             let b = bullets[bIndex];
-            if (Math.hypot(b.x - m.x, b.y - m.y) < m.radius + b.size) {
+            if (Math.hypot(b.x - m.x, b.y - m.y) < m.size / 2 + b.size) {
                 m.hp -= b.damage;
                 bullets.splice(bIndex, 1);
 
@@ -277,19 +268,53 @@ function update() {
     }
 }
 
+// Draw GBA Tilemap Floor
+function drawTileMap() {
+    const tileSize = 32;
+    for (let x = 0; x < canvas.width; x += tileSize) {
+        for (let y = 0; y < canvas.height; y += tileSize) {
+            ctx.fillStyle = ((x / tileSize + y / tileSize) % 2 === 0) ? '#43a047' : '#388e3c';
+            ctx.fillRect(x, y, tileSize, tileSize);
+            
+            // Draw pixel grass dots
+            ctx.fillStyle = '#2e7d32';
+            ctx.fillRect(x + 8, y + 8, 2, 2);
+            ctx.fillRect(x + 20, y + 18, 2, 2);
+        }
+    }
+}
+
+// Pixel Art Rendering Helpers
+function drawPixelSprite(x, y, color, type) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x - 6, y - 6, 12, 12); // Body
+    ctx.fillStyle = '#ffcc80';
+    ctx.fillRect(x - 4, y - 8, 8, 5);  // Head
+    ctx.fillStyle = '#000';
+    ctx.fillRect(x - 2, y - 6, 2, 2);  // Eye L
+    ctx.fillRect(x + 2, y - 6, 2, 2);  // Eye R
+}
+
+function drawPixelMonster(x, y) {
+    ctx.fillStyle = '#4a148c';
+    ctx.fillRect(x - 7, y - 7, 14, 14);
+    ctx.fillStyle = '#ab47bc';
+    ctx.fillRect(x - 5, y - 5, 10, 10);
+    ctx.fillStyle = '#ffeb3b';
+    ctx.fillRect(x - 3, y - 3, 2, 3); // Red Eyes
+    ctx.fillRect(x + 1, y - 3, 2, 3);
+}
+
 function drawLighting() {
-    // Ambient Dark Overlay
-    ctx.fillStyle = 'rgba(8, 8, 12, 0.75)';
+    ctx.fillStyle = 'rgba(10, 15, 25, 0.65)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Player Light Source Gradient
-    const lightRadius = 180;
+    const lightRadius = 110;
     const gradient = ctx.createRadialGradient(
-        player.x, player.y, 10,
+        player.x, player.y, 5,
         player.x, player.y, lightRadius
     );
-    gradient.addColorStop(0, 'rgba(255, 230, 180, 0.35)');
-    gradient.addColorStop(0.5, 'rgba(255, 200, 120, 0.15)');
+    gradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
     gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
     ctx.globalCompositeOperation = 'destination-out';
@@ -303,45 +328,29 @@ function drawLighting() {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw Map Floor Grid
-    ctx.strokeStyle = '#181822';
-    ctx.lineWidth = 1;
-    for (let x = 0; x < canvas.width; x += 40) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
-    }
-    for (let y = 0; y < canvas.height; y += 40) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
-    }
+    drawTileMap();
 
     // Draw Monsters
     monsters.forEach(m => {
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, m.radius, 0, Math.PI * 2);
-        ctx.fillStyle = m.color;
-        ctx.fill();
-
-        // Monster HP Bar
-        ctx.fillStyle = '#c0392b';
-        ctx.fillRect(m.x - 12, m.y - 20, 24, 3);
-        ctx.fillStyle = '#2ecc71';
-        ctx.fillRect(m.x - 12, m.y - 20, (m.hp / m.maxHp) * 24, 3);
+        drawPixelMonster(m.x, m.y);
+        // HP Bar
+        ctx.fillStyle = '#000';
+        ctx.fillRect(m.x - 10, m.y - 14, 20, 3);
+        ctx.fillStyle = '#c62828';
+        ctx.fillRect(m.x - 9, m.y - 13, 18, 1);
+        ctx.fillStyle = '#2e7d32';
+        ctx.fillRect(m.x - 9, m.y - 13, (m.hp / m.maxHp) * 18, 1);
     });
 
     // Draw Bullets
     bullets.forEach(b => {
-        ctx.beginPath();
-        ctx.arc(b.x, b.y, b.size, 0, Math.PI * 2);
         ctx.fillStyle = b.color;
-        ctx.fill();
+        ctx.fillRect(b.x - b.size, b.y - b.size, b.size * 2, b.size * 2);
     });
 
     // Draw Player
-    ctx.font = '26px Arial';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(player.icon, player.x, player.y);
+    drawPixelSprite(player.x, player.y, player.color, player.name);
 
-    // Render Ambient Lighting Layer
     drawLighting();
 }
 
