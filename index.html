@@ -3,88 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2D Shadow MMORPG</title>
+    <title>GBA Pixel RPG - Shadow Realm</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <!-- Character Selection Screen -->
     <div id="character-select" class="screen">
-        <h1>🗡️ SHADOW REALM MMORPG 🗡️</h1>
-        <p class="subtitle">Choose your hero to enter the dark world</p>
-        <div class="card-container">
-            <div class="char-card" onclick="selectCharacter('male')">
-                <div class="avatar">👨</div>
-                <h2>Warrior (Male)</h2>
-                <p>Balanced stats and decent movement speed.</p>
-            </div>
-            <div class="char-card" onclick="selectCharacter('female')">
-                <div class="avatar">👩</div>
-                <h2>Huntress (Female)</h2>
-                <p>High agility and faster attack speed.</p>
-            </div>
-            <div class="char-card" onclick="selectCharacter('old')">
-                <div class="avatar">👨‍🦳</div>
-                <h2>Elder Mage (Old Man)</h2>
-                <p>High damage output with slow movement.</p>
+        <div class="gba-frame">
+            <h1 class="pixel-text title">POKé-STYLE MMORPG</h1>
+            <p class="subtitle">SELECT YOUR TRAINER / HERO</p>
+            <div class="card-container">
+                <div class="char-card" onclick="selectCharacter('male')">
+                    <div class="avatar-pixel male-avatar"></div>
+                    <h2>BOY</h2>
+                    <p>Balanced speed & power</p>
+                </div>
+                <div class="char-card" onclick="selectCharacter('female')">
+                    <div class="avatar-pixel female-avatar"></div>
+                    <h2>GIRL</h2>
+                    <p>Fast move & attack</p>
+                </div>
+                <div class="char-card" onclick="selectCharacter('old')">
+                    <div class="avatar-pixel old-avatar"></div>
+                    <h2>ELDER</h2>
+                    <p>High spell damage</p>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Game Screen -->
     <div id="game-screen" class="screen hidden">
-        <div class="ui-bar">
-            <div class="stat-group">
-                <span id="ui-char-name">Hero</span>
-                <span class="badge">Lv. <span id="ui-level">1</span></span>
+        <div class="gba-ui-box">
+            <div class="ui-row">
+                <div><span id="ui-char-name">HERO</span> <span class="lv-badge">Lv.<span id="ui-level">1</span></span></div>
+                <div>HP: <span id="ui-hp">100</span>/<span id="ui-max-hp">100</span></div>
             </div>
-            <div class="stat-group">
-                <span>HP: <span id="ui-hp">100</span>/<span id="ui-max-hp">100</span></span>
-                <span>EXP: <span id="ui-exp">0</span>/<span id="ui-max-exp">100</span></span>
-            </div>
-            <div class="stat-group">
-                <span>Weapon: <strong id="ui-weapon" class="weapon-tag">Dagger</strong></span>
-                <span>Skill Pts: <strong id="ui-skill-pts">0</strong></span>
+            <div class="ui-row">
+                <div>EXP: <span id="ui-exp">0</span>/<span id="ui-max-exp">100</span></div>
+                <div>WEAPON: <span id="ui-weapon" class="weapon-tag">DAGGER</span></div>
             </div>
         </div>
 
-        <!-- Canvas Area -->
         <div class="canvas-container">
-            <canvas id="gameCanvas" width="800" height="500"></canvas>
-            
-            <!-- Skill Upgrade Menu Overlay -->
-            <div id="skill-menu" class="hidden">
-                <h3>LEVEL UP! UPGRADE SKILL</h3>
+            <canvas id="gameCanvas" width="512" height="384"></canvas>
+
+            <!-- Skill Upgrade Menu -->
+            <div id="skill-menu" class="hidden gba-dialog">
+                <p>LEVEL UP! CHOOSE SKILL:</p>
                 <div class="skill-buttons">
-                    <button onclick="upgradeSkill('dmg')">⚔️ +ATK (+10 Damage)</button>
-                    <button onclick="upgradeSkill('spd')">⚡ +SPD (+0.5 Speed)</button>
-                    <button onclick="upgradeSkill('hp')">❤️ +MAX HP (+25 HP)</button>
+                    <button onclick="upgradeSkill('dmg')">+10 ATK</button>
+                    <button onclick="upgradeSkill('spd')">+0.5 SPD</button>
+                    <button onclick="upgradeSkill('hp')">+25 HP</button>
                 </div>
             </div>
 
-            <!-- Mobile / iPad Touch Controls -->
+            <!-- Mobile Touch Controls -->
             <div id="touch-controls">
                 <div id="joystick-zone">
                     <div id="joystick-knob"></div>
                 </div>
-                <button id="attack-btn">ATTACK ⚔️</button>
+                <button id="attack-btn">A</button>
             </div>
         </div>
 
         <div class="controls-guide">
-            <span>💻 PC: WASD / Arrows to Move | Left Click to Attack</span>
-            <span>📱 iPad/Mobile: Use On-Screen Joystick & Attack Button</span>
+            <span>[WASD] MOVE | [LEFT CLICK / A BUTTON] SHOOT</span>
         </div>
     </div>
 
     <!-- Game Over Screen -->
     <div id="game-over-screen" class="screen hidden">
-        <h1 class="dead-title">YOU DIED</h1>
-        <p>Your journey ended in the shadows.</p>
-        <p>Final Level: <strong id="final-level">1</strong> | Enemies Slain: <strong id="final-kills">0</strong></p>
-        <button class="restart-btn" onclick="location.reload()">TRY AGAIN</button>
+        <div class="gba-dialog game-over-box">
+            <h1 class="dead-title">PLAYER FAINTED!</h1>
+            <p>Your journey ends here...</p>
+            <p>LEVEL: <span id="final-level">1</span> | MONSTERS: <span id="final-kills">0</span></p>
+            <button class="restart-btn" onclick="location.reload()">RESTART</button>
+        </div>
     </div>
 
     <script src="game.js"></script>
 </body>
 </html>
+
+
