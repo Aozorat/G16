@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2D Shadow MMORPG</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Character Selection Screen -->
+    <div id="character-select" class="screen">
+        <h1>🗡️ SHADOW REALM MMORPG 🗡️</h1>
+        <p class="subtitle">Choose your hero to enter the dark world</p>
+        <div class="card-container">
+            <div class="char-card" onclick="selectCharacter('male')">
+                <div class="avatar">👨</div>
+                <h2>Warrior (Male)</h2>
+                <p>Balanced stats and decent movement speed.</p>
+            </div>
+            <div class="char-card" onclick="selectCharacter('female')">
+                <div class="avatar">👩</div>
+                <h2>Huntress (Female)</h2>
+                <p>High agility and faster attack speed.</p>
+            </div>
+            <div class="char-card" onclick="selectCharacter('old')">
+                <div class="avatar">👨‍🦳</div>
+                <h2>Elder Mage (Old Man)</h2>
+                <p>High damage output with slow movement.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen hidden">
+        <div class="ui-bar">
+            <div class="stat-group">
+                <span id="ui-char-name">Hero</span>
+                <span class="badge">Lv. <span id="ui-level">1</span></span>
+            </div>
+            <div class="stat-group">
+                <span>HP: <span id="ui-hp">100</span>/<span id="ui-max-hp">100</span></span>
+                <span>EXP: <span id="ui-exp">0</span>/<span id="ui-max-exp">100</span></span>
+            </div>
+            <div class="stat-group">
+                <span>Weapon: <strong id="ui-weapon" class="weapon-tag">Dagger</strong></span>
+                <span>Skill Pts: <strong id="ui-skill-pts">0</strong></span>
+            </div>
+        </div>
+
+        <!-- Canvas Area -->
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="800" height="500"></canvas>
+            
+            <!-- Skill Upgrade Menu Overlay -->
+            <div id="skill-menu" class="hidden">
+                <h3>LEVEL UP! UPGRADE SKILL</h3>
+                <div class="skill-buttons">
+                    <button onclick="upgradeSkill('dmg')">⚔️ +ATK (+10 Damage)</button>
+                    <button onclick="upgradeSkill('spd')">⚡ +SPD (+0.5 Speed)</button>
+                    <button onclick="upgradeSkill('hp')">❤️ +MAX HP (+25 HP)</button>
+                </div>
+            </div>
+
+            <!-- Mobile / iPad Touch Controls -->
+            <div id="touch-controls">
+                <div id="joystick-zone">
+                    <div id="joystick-knob"></div>
+                </div>
+                <button id="attack-btn">ATTACK ⚔️</button>
+            </div>
+        </div>
+
+        <div class="controls-guide">
+            <span>💻 PC: WASD / Arrows to Move | Left Click to Attack</span>
+            <span>📱 iPad/Mobile: Use On-Screen Joystick & Attack Button</span>
+        </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="game-over-screen" class="screen hidden">
+        <h1 class="dead-title">YOU DIED</h1>
+        <p>Your journey ended in the shadows.</p>
+        <p>Final Level: <strong id="final-level">1</strong> | Enemies Slain: <strong id="final-kills">0</strong></p>
+        <button class="restart-btn" onclick="location.reload()">TRY AGAIN</button>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

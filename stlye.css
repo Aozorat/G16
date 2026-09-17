@@ -1,0 +1,221 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+body {
+    background-color: #08080a;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+h1 {
+    color: #e67e22;
+    text-shadow: 0 0 15px rgba(230, 126, 34, 0.6);
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #888;
+    margin-bottom: 25px;
+}
+
+.card-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.char-card {
+    background: #141419;
+    border: 2px solid #2a2a35;
+    border-radius: 12px;
+    padding: 20px;
+    width: 220px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.char-card:hover, .char-card:active {
+    transform: translateY(-5px);
+    border-color: #e67e22;
+    box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+}
+
+.avatar {
+    font-size: 55px;
+    margin-bottom: 10px;
+}
+
+/* UI Bar */
+.ui-bar {
+    display: flex;
+    justify-content: space-between;
+    width: 800px;
+    max-width: 95vw;
+    background: #141419;
+    padding: 10px 15px;
+    border-radius: 8px 8px 0 0;
+    border: 2px solid #2a2a35;
+    border-bottom: none;
+    font-size: 14px;
+}
+
+.stat-group {
+    display: flex;
+    gap: 12px;
+}
+
+.badge {
+    background: #e67e22;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.weapon-tag {
+    color: #f1c40f;
+}
+
+/* Canvas Container */
+.canvas-container {
+    position: relative;
+    width: 800px;
+    max-width: 95vw;
+}
+
+canvas {
+    background-color: #0f0f14;
+    border: 2px solid #2a2a35;
+    display: block;
+    width: 100%;
+}
+
+/* Skill Overlay */
+#skill-menu {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(20, 20, 25, 0.95);
+    border: 2px solid #e67e22;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-align: center;
+    z-index: 10;
+}
+
+#skill-menu h3 {
+    font-size: 14px;
+    color: #f1c40f;
+    margin-bottom: 8px;
+}
+
+.skill-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.skill-buttons button {
+    background: #e67e22;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Touch Controls */
+#touch-controls {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 25px;
+    pointer-events: none;
+}
+
+#joystick-zone {
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    position: relative;
+    pointer-events: auto;
+}
+
+#joystick-knob {
+    width: 40px;
+    height: 40px;
+    background: rgba(230, 126, 34, 0.8);
+    border-radius: 50%;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+#attack-btn {
+    width: 80px;
+    height: 80px;
+    background: rgba(231, 76, 60, 0.8);
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    pointer-events: auto;
+}
+
+.controls-guide {
+    margin-top: 8px;
+    color: #666;
+    font-size: 12px;
+    display: flex;
+    gap: 20px;
+}
+
+/* Game Over Screen */
+.dead-title {
+    color: #e74c3c;
+    font-size: 48px;
+    text-shadow: 0 0 20px rgba(231, 76, 60, 0.8);
+}
+
+.restart-btn {
+    margin-top: 20px;
+    background: #e67e22;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
