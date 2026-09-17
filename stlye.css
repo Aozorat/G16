@@ -2,14 +2,14 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Press Start 2P', monospace;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
 }
 
 body {
-    background-color: #08080a;
+    background-color: #0f171e;
     color: #ffffff;
     display: flex;
     justify-content: center;
@@ -30,192 +30,209 @@ body {
     display: none !important;
 }
 
-h1 {
-    color: #e67e22;
-    text-shadow: 0 0 15px rgba(230, 126, 34, 0.6);
-    margin-bottom: 5px;
+/* Retro GBA Styling */
+.gba-frame {
+    background: #283593;
+    border: 4px solid #ffffff;
+    box-shadow: inset 0 0 0 4px #1a237e, 0 0 20px rgba(0,0,0,0.8);
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.title {
+    color: #ffeb3b;
+    font-size: 16px;
+    margin-bottom: 12px;
+    text-shadow: 2px 2px #c62828;
 }
 
 .subtitle {
-    color: #888;
-    margin-bottom: 25px;
+    font-size: 10px;
+    color: #b0bec5;
+    margin-bottom: 20px;
 }
 
 .card-container {
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 15px;
 }
 
 .char-card {
-    background: #141419;
-    border: 2px solid #2a2a35;
-    border-radius: 12px;
-    padding: 20px;
-    width: 220px;
-    text-align: center;
+    background: #3f51b5;
+    border: 3px solid #ffffff;
+    padding: 15px;
+    width: 150px;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    text-align: center;
 }
 
 .char-card:hover, .char-card:active {
-    transform: translateY(-5px);
-    border-color: #e67e22;
-    box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+    background: #5c6bc0;
+    border-color: #ffeb3b;
 }
 
-.avatar {
-    font-size: 55px;
-    margin-bottom: 10px;
+.avatar-pixel {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 10px auto;
+    image-rendering: pixelated;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-/* UI Bar */
-.ui-bar {
+.male-avatar { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"><path fill="%23ffcc80" d="M2 1h4v3H2z"/><path fill="%231565c0" d="M1 4h6v4H1z"/><path fill="%23d84315" d="M2 0h4v1H2z"/></svg>'); }
+.female-avatar { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"><path fill="%23ffcc80" d="M2 1h4v3H2z"/><path fill="%23ad1457" d="M1 4h6v4H1z"/><path fill="%23f48fb1" d="M1 0h6v2H1z"/></svg>'); }
+.old-avatar { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"><path fill="%23ffe0b2" d="M2 2h4v2H2z"/><path fill="%23424242" d="M1 4h6v4H1z"/><path fill="%23eceff1" d="M2 0h4v2H2zM2 3h4v2H2z"/></svg>'); }
+
+.char-card h2 {
+    font-size: 11px;
+    margin-bottom: 8px;
+    color: #ffeb3b;
+}
+
+.char-card p {
+    font-size: 7px;
+    line-height: 10px;
+    color: #e0e0e0;
+}
+
+/* Game Screen GBA UI */
+.gba-ui-box {
+    width: 512px;
+    max-width: 95vw;
+    background: #e0e0e0;
+    border: 4px solid #212121;
+    border-bottom: none;
+    padding: 8px 12px;
+    color: #212121;
+    font-size: 9px;
+}
+
+.ui-row {
     display: flex;
     justify-content: space-between;
-    width: 800px;
-    max-width: 95vw;
-    background: #141419;
-    padding: 10px 15px;
-    border-radius: 8px 8px 0 0;
-    border: 2px solid #2a2a35;
-    border-bottom: none;
-    font-size: 14px;
+    margin-bottom: 4px;
 }
 
-.stat-group {
-    display: flex;
-    gap: 12px;
-}
-
-.badge {
-    background: #e67e22;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-weight: bold;
+.lv-badge {
+    color: #c62828;
 }
 
 .weapon-tag {
-    color: #f1c40f;
+    color: #1565c0;
 }
 
-/* Canvas Container */
 .canvas-container {
     position: relative;
-    width: 800px;
+    width: 512px;
     max-width: 95vw;
 }
 
 canvas {
-    background-color: #0f0f14;
-    border: 2px solid #2a2a35;
+    background-color: #4caf50;
+    border: 4px solid #212121;
     display: block;
     width: 100%;
+    image-rendering: pixelated;
 }
 
-/* Skill Overlay */
-#skill-menu {
+/* GBA Dialogue Box Overlay */
+.gba-dialog {
     position: absolute;
-    top: 15px;
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(20, 20, 25, 0.95);
-    border: 2px solid #e67e22;
-    padding: 12px 20px;
-    border-radius: 8px;
+    background: #ffffff;
+    border: 4px solid #212121;
+    box-shadow: inset -2px -2px 0 #9e9e9e;
+    padding: 10px 15px;
+    color: #212121;
     text-align: center;
+    font-size: 8px;
     z-index: 10;
-}
-
-#skill-menu h3 {
-    font-size: 14px;
-    color: #f1c40f;
-    margin-bottom: 8px;
 }
 
 .skill-buttons {
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    margin-top: 8px;
 }
 
-.skill-buttons button {
-    background: #e67e22;
-    border: none;
+.skill-buttons button, .restart-btn {
+    background: #ff9800;
+    border: 2px solid #212121;
     color: white;
-    padding: 6px 12px;
-    border-radius: 4px;
+    padding: 6px 8px;
+    font-size: 8px;
     cursor: pointer;
-    font-weight: bold;
+    font-family: 'Press Start 2P', monospace;
+}
+
+.skill-buttons button:active, .restart-btn:active {
+    background: #e65100;
 }
 
 /* Touch Controls */
 #touch-controls {
     position: absolute;
-    bottom: 15px;
+    bottom: 10px;
     left: 0;
     right: 0;
     display: flex;
     justify-content: space-between;
-    padding: 0 25px;
+    padding: 0 15px;
     pointer-events: none;
 }
 
 #joystick-zone {
-    width: 100px;
-    height: 100px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid #ffffff;
     border-radius: 50%;
     position: relative;
     pointer-events: auto;
 }
 
 #joystick-knob {
-    width: 40px;
-    height: 40px;
-    background: rgba(230, 126, 34, 0.8);
+    width: 30px;
+    height: 30px;
+    background: #ffeb3b;
+    border: 2px solid #212121;
     border-radius: 50%;
     position: absolute;
-    top: 30px;
-    left: 30px;
+    top: 23px;
+    left: 23px;
 }
 
 #attack-btn {
-    width: 80px;
-    height: 80px;
-    background: rgba(231, 76, 60, 0.8);
-    border: 2px solid #ffffff;
+    width: 60px;
+    height: 60px;
+    background: #c62828;
+    border: 3px solid #ffffff;
     border-radius: 50%;
     color: white;
-    font-weight: bold;
-    font-size: 12px;
+    font-size: 14px;
+    box-shadow: 2px 2px 0 #000;
     pointer-events: auto;
 }
 
 .controls-guide {
     margin-top: 8px;
-    color: #666;
-    font-size: 12px;
-    display: flex;
-    gap: 20px;
+    font-size: 7px;
+    color: #90a4ae;
 }
 
-/* Game Over Screen */
+.game-over-box {
+    position: relative;
+    top: 0;
+    transform: none;
+}
+
 .dead-title {
-    color: #e74c3c;
-    font-size: 48px;
-    text-shadow: 0 0 20px rgba(231, 76, 60, 0.8);
-}
-
-.restart-btn {
-    margin-top: 20px;
-    background: #e67e22;
-    border: none;
-    color: white;
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
+    color: #c62828;
+    font-size: 14px;
+    margin-bottom: 10px;
 }
